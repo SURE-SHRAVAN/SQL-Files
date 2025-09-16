@@ -41,7 +41,7 @@ insert into student1 (sno , idno , htnp , sname , marks ) values ( 1 , '236M1A42
 
 exec sp_help student1
 
-/* TO DROP A CONSTRAIN*/
+/* TO DROP A CONSTRAIN only for constraints which works on contraint names*/
 ALTER TABLE STUDENT1 DROP CONSTRAINT  UQ__student1__DDDF6447BF7E2307
 
 
@@ -70,9 +70,79 @@ insert into student3 (idno , htno , sname , marks) values ( null , 'fadfcas' , n
 insert into student3 (idno , htno , sname , marks) values ( null , 'fadfca' , null , 55)
 
 
+/* Not Null */ 
+
+ create table student4 ( 
+     idno int , 
+     htno  varchar(20) ,
+     sname varchar(20) constraint student4_sname_notnull not null ,
+     marks int)
+
+     exec sp_help student4
+
+insert into student4 values (1 , 'sdfs', 'pussy' , 74)
+insert into student4 values (1 , 'sdfs', 'pussy' , 74)
+insert into student4 values (2 , null , 'cock' , 21) 
+insert into student4 values (2 , 'sddfs' , null , 21) -- error
+
+-- TO remove not null constraint
+
+alter table student4 alter column sname varchar(20)
+
+/* not null after table creation */
+
+alter table student4 alter column idno int not null
+
+/* Check Constraint */
+         
+
+create table student5 ( idno int , sname varchar(20)  , marks int constraint student5_marks_check check( marks >= 0 and marks<=100) )
+
+insert into student5 values (4241 , 'shravan' , 100)
+
+insert into student5 values (4242 , 'sai' , 75)
+
+insert into student5 values (4243 , 'sowjanya' , 0)
+
+insert into student5 values (4244 , 'teja' , 1000)
+
+insert into student5 values (4245 , 'vinay' , -100)
+
+
+exec sp_help student5
+
+-- removing check is same as null as it shows constraint names
+
+ALTER TABLE STUDENT5 DROP CONSTRAINT  student5_marks_check
+
+
+create table student6 ( idno int , sname varchar(20)  , marks int  , city varchar(20) constraint student5_marks_city check( city = 'Rjahmundry'  or city = 'Kakinada' ))
+
+insert into student6 values(12 , 'sai' , 20 , null)
+
+-- to add after creation of table
+/* same as for unique*/
+
+select * from student6
+select * from student5
 
 SELECT * FROM student2
 
 SELECT * FROM student3
 
+select * from student4
 
+
+create table student7 ( idno int , sname varchar(20) , loc varchar(20))
+
+alter table student7 add constraint  student7_idno_check check (idno >=1 and idno <= 100) , constraint student7_idno_unique unique (idno)  
+
+exec sp_help student7
+
+alter table student7 add marks int 
+
+alter table student7 add constraint student7_marks_default default = 0 (marks)
+
+alter table student7 drop column marks 
+
+insert into student7 values (
