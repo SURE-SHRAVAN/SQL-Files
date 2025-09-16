@@ -48,14 +48,31 @@ ALTER TABLE STUDENT1 DROP CONSTRAINT  UQ__student1__DDDF6447BF7E2307
 
 -- create a constrain with own name
  
- create table student2 ( 
-     idno int constraint student2_idno_unique unique , 
-     htno  varchar(20)  constraint  student2_htno_unique unique,
+ create table student3 ( 
+     idno int , 
+     htno  varchar(20) ,
      sname varchar(20),
      marks int)
 
-exec sp_help student2
+exec sp_help student3
+
+alter table student3 add constraint student_idno_unique unique (idno)
+
+
+alter table student3 add constraint student_sname_unique unique (sname)
+
+insert into student3 (idno , htno , sname , marks) values ( 1 , 'sfe52' , 'ravi' , 85)
+
+insert into student3 (idno , htno , sname , marks) values ( 2 , 'sfe53' , 'ravii' , 58)
+
+insert into student3 (idno , htno , sname , marks) values ( null , 'fadfcas' , null , 85)
+
+insert into student3 (idno , htno , sname , marks) values ( null , 'fadfca' , null , 55)
+
+
 
 SELECT * FROM student2
+
+SELECT * FROM student3
 
 
