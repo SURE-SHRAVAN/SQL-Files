@@ -181,6 +181,9 @@ select bookname from student_primary where idno = 1
 
 create table auto_table ( idno int identity (1 , 1 ) ,sname  varchar (20) , marks int ) 
 
-insert into auto table
+alter table auto_table drop consraint identity idno 
+
+insert into auto_table (sname , marks) values ('shravan' , 45)
+select  * from auto_table
 
 
