@@ -108,3 +108,4 @@ truncate table student
 drop table student
 
 select * from student
+

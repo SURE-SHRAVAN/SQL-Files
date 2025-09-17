@@ -177,3 +177,10 @@ select * from student_library
 select bookname from student_primary where idno = 1
 
 
+/* identity*/
+
+create table auto_table ( idno int identity (1 , 1 ) ,sname  varchar (20) , marks int ) 
+
+insert into auto table
+
+

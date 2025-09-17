@@ -112,3 +112,7 @@ select * from Employee
 INSERT INTO Employee (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO) VALUES
 (122334, '',   '', NULL, '', 5000, NULL, 10)                           
 
+
+SELECT deptno
+FROM Department
+WHERE deptno NOT IN (SELECT DISTINCT deptno FROM Employee);
