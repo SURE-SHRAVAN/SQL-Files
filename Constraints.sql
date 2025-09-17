@@ -145,4 +145,35 @@ alter table student7 add constraint student7_marks_default default = 0 (marks)
 
 alter table student7 drop column marks 
 
-insert into student7 values (
+-- insert into student7 values ()
+
+/* Primary Key 
+ 1) this tells us about linking two tables
+ 2) this helps to maintain uique value and does not allow null
+*/
+
+create table student_primary ( IDNO INT constraint student_idno_primarykey primary key , SNAME VARCHAR(20) , marks int)
+
+insert into student_primary (idno , SNAME , marks ) values ( 1 , 'shravan' , 85) , 
+                                                           ( 2 , 'sai' , 43) , 
+                                                           (3 , 'anil' , 33) , 
+                                                           ( 4 , 'vamshi' , 74)
+insert into student_primary (idno , SNAME , marks ) values  (5 , 'deepu' , 76)
+
+select * from student_primary
+
+create table student_library (bookname varchar(20) , bookcost int, dateofissue date , idno int constraint library_idno_fk references student_primary (idno))
+
+insert into student_library (bookname , bookcost , dateofissue , idno) values ( 'pride and prejudice' , 330 , '2017-05-19' , 1),
+                                                                              ( 'rich dad poor dad' , 3270 , '2017-05-19' , 2),
+                                                                              ( 'power of mind' , 780 , '2017-05-19' , 3),
+                                                                              ( 'mary jane' , 380 , '2017-05-19' , 4)
+
+insert into student_library values ('how to get rich' , 410 ,'2017-05-19' , 5 )
+
+select * from student_library          
+
+
+select bookname from student_primary where idno = 1
+
+
