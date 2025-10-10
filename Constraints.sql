@@ -187,3 +187,5 @@ insert into auto_table (sname , marks) values ('shravan' , 45)
 select  * from auto_table
 
 
+
+-- to add a primary we should make it null before

@@ -4,7 +4,7 @@ USE SMS
 
 create table student (idno varchar(20) , Sname  int , dob  int , Email float)
 
-sp_help student /* to print the structure of the table*/
+-- sp_help student /* to print the structure of the table*/
 
 /*changing the data types*/
 alter table student alter column idno int

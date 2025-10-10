@@ -23,7 +23,7 @@ create table employee ( empno int,
                         deptno int)
 create table department ( deptno int, 
                           dname varchar(20),
-                          loc varchar(20)
+                          loc varchar(20) )
 
 
 
@@ -116,3 +116,165 @@ INSERT INTO Employee (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO) VALUE
 SELECT deptno
 FROM Department
 WHERE deptno NOT IN (SELECT DISTINCT deptno FROM Employee);
+
+-- TO select all fields of a table 
+
+select * from employee
+
+select empno , deptno , ename from Employee
+
+select empno , ename from employee
+
+select  ename , dname from department
+ 
+
+select empno from employee
+
+select job, deptno from employee
+
+select empno  , sal , comm , sal + comm from employee 
+/* Here the total sal with no commision will be null as some of the emp will not have comm so to overcome this 
+we need to use 0 in place of null who doesn't have any comm to get total sal correctly
+we  use isnull(col , value) to repalce the null value*/
+
+select empno  , sal , comm , sal + isnull(comm ,0) from employee 
+
+/* for printing the colmun vale total sal we dont have any name of that column so we use "as" or decleare the name in [] */
+
+  
+select empno  , sal , comm , sal + isnull(comm ,0)  as totalsal from employee 
+
+select * from employee where deptno = 10
+
+select * from employee where sal > 2000
+
+select * from employee where job = 'manager'
+
+select ename from employee where deptno != 10
+ -- not equal to
+
+ select ename from employee where deptno <> 10
+
+ ----------------------------------Logical Operators---------------------------------------------------------
+
+
+
+
+
+
+
+
+  ----------------------------------Special Operators---------------------------------------------------------
+
+-- while comparing a query with null we should use is & is not 
+
+select * from employee where comm is null
+
+select * from employee where comm is not null
+
+select * from employee where empno in (7839 , 7788 , 7499 , 7844) /* we can also use or operator between every comaprison*/
+
+select * from employee where job in ('analyst' , 'salesman' , 'manager')
+
+select * from employee where sal between  2000   and 4000
+
+select *  from employee where hiredate between '1987-01-01' and '1987-12-31'
+
+select * from employee where ename  like 'a__%' 
+
+insert into employee values (1001 , 'shr%van' , 'analyst' , 1002 , '1981-04-14' , 5000 , null , 50)
+
+select * from employee
+
+select ename from employee where ename  like '_%_'
+
+/* Functions: set of sql statements which takes input and gives output
+Types of functions: 
+ 1)Pre deifined 
+ 2)User defined
+
+1)Pre defined functions are built-in functions which can be used anywhere
+
+types of pre defined functions
+   scalar valued functions
+   aggregate functions or group functions
+      these functions return one result for one group 
+      ex: sum () only for numeric data , avg () , max () , min () , count ()*/
+
+select sum(sal) as [total sal] from employee
+
+select avg(sal) as [average sal] from employee 
+
+select sum(sal)/15 [average sal] from employee
+
+select max(sal) [maximum sal] from employee
+
+select max(ename) [maximum sal] from employee /*this will give by alphabet oreder as the alphabet vlaue increasesfrom first last so the max value of the letter will return*/
+
+-- for max(date) recent date will be given
+
+select min(ename) [maximum sal] from employee
+
+select count(ename) as [no. of employee] from employee  where ename like 'a%'
+
+select avg(sal) [avg], min (sal) [min] from employee
+
+
+select  count(*) [no. of employee] from employee where deptno = 10
+
+select  count(*) [no. of employee] from employee where deptno = 20
+
+select  count(*) [no. of employee] from employee where deptno = 30
+
+select deptno , count(*) [no. of employee] from employee where deptno in  (10 ,20 ,30) group by deptno
+
+select * from employee where ename like '%[%]%'
+
+select deptno, max(sal) [max sal] from employee group by deptno 
+
+select  deptno ,  max(sal) [hig sal] from employee where deptno = 10 group by deptno
+
+select job , deptno , count(job) from employee where deptno in(10, 20 , 30)  group by job , deptno 
+select deptno , count(*) from employee group by deptno  having count(*) >= 5
+
+
+-- where clasue cannot have aggregate or group function it will give aggregate error 
+
+select deptno , max(sal) from employee group by deptno having max(sal) >= 3000
+
+select deptno , max(sal) from employee group by deptno 
+
+select deptno , sum(sal) [total sal] from employee group by deptno having sum(sal) >= 9000
+
+select deptno , count(sal) [total sal] from employee group by deptno having sum(sal) >= 9000
+
+-- for order by ascending we should use asc and for descending we should use descending
+
+select ename  from employee order by ename  desc
+
+select ename from employee order by sal asc
+
+select * from employee
+
+select top 5 ename from employee 
+order by sal asc 
+
+select abs(-100) from employee
+select sqrt(sal) from employee
+
+select POWER(sal , 2) from employee
+
+select round (852.369845854854754, -3) 
+
+
+select ascii('a')
+
+select char(52)
+
+select ename , len (ename) from employee where len(ename) != 5
+
+select left ('Aggipetti Machha' , 1)
+
+select right ('Aggipetti Machha' , 15)
+
+select substring ('hinokami kagura' , 2 , 100)
