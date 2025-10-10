@@ -264,7 +264,7 @@ select sqrt(sal) from employee
 
 select POWER(sal , 2) from employee
 
-select round (852.369845854854754, -3) 
+select round (1852.369845854854754, -4) 
 
 
 select ascii('a')
@@ -278,3 +278,5 @@ select left ('Aggipetti Machha' , 1)
 select right ('Aggipetti Machha' , 15)
 
 select substring ('hinokami kagura' , 2 , 100)
+
+select round (6254.4115252255152, -4)
