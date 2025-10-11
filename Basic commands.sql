@@ -280,3 +280,137 @@ select right ('Aggipetti Machha' , 15)
 select substring ('hinokami kagura' , 2 , 100)
 
 select round (6254.4115252255152, -4)
+
+/* Date functions 
+  getdate()  --Returns the ccurrent system date and time
+  sysdatetime() --Returns the current system date and time
+  Datepart() --Return the specified part of a date
+  Datename() -- Returns the specified part of a date
+  Year() --returns the year number from a given date
+  Month() --returns the month number from a given date
+  Day() --Returns the day number froma agiven date
+  datediff() -- returns the difference between 2 dates*/
+
+-- gives present date and time of the database server
+select getdate()
+
+--gives systemdatetime
+
+select SYSDATETIME() as [sys_date]
+
+select GETUTCDATE()
+
+select DATEPART(year ,  '2020-01-20')
+
+select DATEPART(month , GETDATE())
+
+--there will be no day name it will give date but name will be day
+
+select datepart(day  ,  getdate())
+
+select datepart(hour , getdate())
+
+select datepart(minute , getdate())
+
+
+select datepart(SECOND, getdate())
+
+select datepart(WEEKDAY ,getdate())
+
+select datename(DAYOFYEAR , getdate())
+
+select DATENAME(month , getdate())
+
+select DATENAME(weekday , getdate())
+
+select * from employee where year(hiredate) = 1981
+
+
+select * from employee where year(hiredate)  = 1981 and month(hiredate) = 12
+ 
+select * from employee where hiredate between '1981-12-01' and '1981-12-31'
+ 
+select * from employee where hiredate >='1981-12-01' and hiredate <= '1981-12-31'
+
+select * from employee where hiredate  < '1981-12-01' or hiredate > '1981-12-31'
+
+--to get no of years diff betwwen 2 years
+select DATEDIFF(year , '2000-01-01' , '2002-11-01')
+
+-- to get no. of months diff between 2 years
+select DATEDIFF(month , '2000-01-01' , '2002-11-01')
+
+--to get in days
+
+select datediff(day , '2000-01-01' , '2002-11-01')
+
+select DATEDIFF(day , '2000-12-31' , '2001-01-01')
+
+select * from employee where day(hiredate) = 15
+
+
+select * , datediff (year , hiredate , getdate())  from employee    where datediff (year , hiredate , getdate()) < 40 
+
+
+/* set operators 
+ these opertors work on complete rows of the queries , 
+ same columnso the results of the queries must have the same columnname 
+ order and the types of columns must be compatible. 
+ These are the 4 set operatos in sql server
+ 1)union
+ 2)union all
+ 3)intersect
+ 4)except*/
+
+--gives the jobs in both but no repeated values
+select job from employee where deptno =10
+union -- if used union all then gives all jobs
+select job from employee where deptno =20
+
+-- gives only common values
+select job from employee where deptno =10
+intersect
+select job from employee where deptno =20
+
+-- removes common data from the set 1 based on set 2
+select job from employee where deptno =10
+except
+select job from employee where deptno =20
+
+
+
+
+
+
+
+
+
+/*Sub Query
+ In SQL a Suquery can be simply defined as a query within another
+ query.In other words we can say that a Subquery is a query that is 
+ embedded in where clause of another sql query.The outer query i s called as 
+ "main query" and inner query is called as "sub query"
+ Rules of Subquery
+  Sub queries must be enclosed in parantheses
+  sub queries are on the right side of the comparison operator.
+  Order by Command cannot be used in a subquery
+  group by command can be used in a sub query
+  you can place a sub query in a sql clauses:
+  where clause and having clause , from clause.
+  sub queries can be used with select insert update delete 
+  satements along with expression operator.
+ Types of sub queries
+   there are three broad divisions of sub query
+   single-row sub query
+   multiple row sub query
+   correlated sub query
+ Syntax of Sub query
+  select column_name from table_name where column_name
+  expression operator
+  (select column_name from table_name where.......)
+ */
+
+--print the details of the employee who is getting the highest salary
+
+select * from employee where sal = (select max(sal) from employee)
+
