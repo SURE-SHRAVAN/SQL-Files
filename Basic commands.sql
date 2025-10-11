@@ -414,3 +414,15 @@ select job from employee where deptno =20
 
 select * from employee where sal = (select max(sal) from employee)
 
+--print the second highest salary
+select    max(sal) [third high sal] from employee   where sal < (select max(sal) from employee) 
+
+--print the third highest salary
+select   max(sal) [third high sal] from employee  where sal < (select max(sal) from employee where sal < (select max(sal) from employee) )
+
+--print all the details pf second highest sal
+
+select * from employee where  sal = (select    max(sal) [third high sal] from employee   where sal < (select max(sal) from employee) )
+
+select * from employee where  sal =(select   max(sal) [third high sal] from employee  where sal < (select max(sal) from employee where sal < (select max(sal) from employee) ))
+
