@@ -26,7 +26,10 @@ create table department ( deptno int,
                           loc varchar(20) )
 
 
-
+insert into department values (10, 'accounting', 'new york')
+insert into department values (20, 'research', 'dallas')
+insert into department values (30, 'sales', 'chicago')
+insert into department values (40, 'operations', 'boston')
 /* to find the structure of the table*/
 sp_help department
 
@@ -426,3 +429,96 @@ select * from employee where  sal = (select    max(sal) [third high sal] from em
 
 select * from employee where  sal =(select   max(sal) [third high sal] from employee  where sal < (select max(sal) from employee where sal < (select max(sal) from employee) ))
 
+/* MULTIPLE SUBQUERY*/
+
+select * from department where deptno = (select DISTINCT deptno from employee where mgr = 7698) /* OR WE CAN ALSO USE "IN" INTHE PLACE OF
+=  AFTER WHERE*/
+
+select * from department where deptno IN (select DISTINCT deptno from employee where mgr = 7698)
+
+-- print the details of the who is getting the low sal in each dept
+
+select  min(sal) [no. of employee] from employee where deptno in  (10 ,20 ,30) group by deptno
+
+select * from employee where sal in (select  min(sal) [no. of employee] from employee where deptno in  (10 ,20 ,30) group by deptno)
+
+-- if we want to print a column values beside a aggregate vale wes hould use group by and column  name
+
+-- if a sub query returns more than 1 value we should use in beside of equal to
+
+select * from employee where sal in (select  max(sal) [no. of employee] from employee where deptno in  (10 ,20 ,30) group by deptno)
+
+
+select * from employee where sal > (select min(sal) from employee where deptno in (10) )
+
+select * from employee where sal > any (select (sal) from employee where deptno in (10) )
+/* the use of the 'any' means  more than the  min value of the column value*/
+
+--print the details of the employee who haas more sal than depto no 30 max salary
+
+select * from employee where sal > (select max(sal) from employee where deptno = 30 group by deptno)
+
+select * from employee where sal > all(select sal from employee where deptno = 30)
+
+       
+--------------------------------------------------------------------------------------------------------------------------------------------
+                                         /* JOINS */
+
+-- Composite key
+
+ /* the join clause allows us to retrieve data from two or more related tables into a meaningful 
+    result set. We can join the tableusing a select statement and a join condition. it indicates
+    how sql server can use data from one table to select rows from another table.In general ,
+    tables are related to each other using foreign key comstraints.
+    In a join query , a condition indicates how two tables are related:
+    Choose columns from each table that should be used the join. A join conditon indicates
+    a foreign key from one table and its corresponding ket in the other table.
+    Specify the logical operator to compare values from the cloumns like  = ,  < or >.*/
+
+
+    /* types of joins
+    1. inner join
+    2. self join
+    3. outer join ---- 1.left outer join
+                       2.right outer join 
+                       3.full outer join
+    4. cross join*/
+
+-- cross join or cartesian join 
+
+select * from employee , department
+
+select empno , ename , dname , loc from employee , department
+
+select empno , ename , dname , loc  , employee.deptno from employee , department
+
+select empno , ename , dname , loc  , department.deptno from employee , department
+
+select * from employee , department where employee.deptno = department.deptno
+
+-- wen usign a oin we should use on in the palce of where
+
+select * from employee inner join department on employee.deptno = department.deptno
+
+-- innerS join gives the matched values from both tables
+
+-- left join or left outer join means the table on the left of join is left and right is right means matching data from employee and non matcing from department
+
+select * from employee left outer join department on employee.deptno = department.deptno
+
+select * from employee right outer join department on employee.deptno = department.deptno
+
+-- print the department details where employee are not present
+-- print the details where they do not belong to any department
+
+/*                                     Self Join 
+         A table is joined to itself using the self join . It means that each table row
+         is combined with itself and every other table row. The self join can be thought of 
+         as a join of two copies of the same tables. We can do this with the help of table aliases 
+         to assign a specific name to each table's instance. 
+         THE TABLE ALIASES ENABLES US TO USE THE TABLE'S TEMPORRY NAME THAT WE GOING TO USE IN THE QUERY.iTS  A USEFUL 
+         WAY TO EXRACT HIERARCHIAL DATA AND COMPARING ROWS INSIDE A SINGLE TABLE 
+         
+         */
+
+select employee.ename , [ manager ].ename [manager name] from employee ,  employee [ manager ] where employee.mgr = [ manager ].empno
