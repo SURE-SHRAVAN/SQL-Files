@@ -522,3 +522,172 @@ select * from employee right outer join department on employee.deptno = departme
          */
 
 select employee.ename , [ manager ].ename [manager name] from employee ,  employee [ manager ] where employee.mgr = [ manager ].empno
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+use shravandb
+
+create table student (
+  idno int, name varchar(20) , marks int)
+
+-- to get back something after execution of  delete command we need to use '''begin transaction'''
+
+begin transaction [delete record]
+
+insert into student values ( 1 , 'shravan' , 95)
+insert into student values (2  , 'sai' , 97)
+insert into student values (3, 'vinay' , 94)
+
+delete from student where idno = 1
+
+select * from student
+
+rollback transaction [delete record] -- with the help of rollback we can get back the deleted object
+
+
+begin tran deleteall
+ delete from student
+
+ rollback tran deleteall
+
+begin tran modifications
+ insert into student values ( 4 , 'xcvb'  , 52)
+ delete from student where idno = 3 
+ update student set marks = 65 where idno  = 1
+
+ select * from student
+
+ rollback tran modifications
+
+begin tran modifications1
+ save tran one
+  insert into student values ( 4 , 'xcvb'  , 52) --adding name to the tran makes us to rollback the record individually
+ save tran two
+  delete from student where idno = 3 
+ save tran three
+  update student set marks = 65 where idno  = 1
+
+ select * from student
+
+rollback tran modifications1
+
+ rollback tran three --for specific record undo
+ rollback tran two
+ rollback tran one
+
+
+ 
+begin tran modifications2
+ save tran one
+  insert into student values ( 4 , 'xcvb'  , 52) --adding name to the tran makes us to rollback the record individually
+ save tran two
+  delete from student where idno = 3 
+ save tran three
+  update student set marks = 65 where idno  = 1
+
+ select * from student
+
+ rollback tran two -- when we use rollback for any one tran it wil also rollback all rollback after th
+rollback tran modifications2
