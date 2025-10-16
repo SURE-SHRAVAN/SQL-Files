@@ -198,7 +198,9 @@ select count(*) from employee where ename like '%s' --70
 
 select count(*) from employee where deptno = 10 --71
 
-SELECT deptno, COUNT(*) AS [no_of_employees] FROM employee WHERE deptno IN (10, 20, 30) GROUP BY deptno;
+SELECT deptno, COUNT(*) AS [no_of_employees] FROM employee WHERE deptno IN (10, 20, 30) GROUP BY deptno; --72
+
+
 
 
 
